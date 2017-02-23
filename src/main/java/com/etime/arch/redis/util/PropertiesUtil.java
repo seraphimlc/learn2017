@@ -11,6 +11,7 @@ import java.util.Properties;
 /**
  * Created by huitailang on 17/2/22.
  * 读取资源文件
+ * from smart-framework
  */
 public class PropertiesUtil {
     public static final Logger LOGGER = LoggerFactory.getLogger(PropertiesUtil.class);
@@ -77,4 +78,6 @@ public class PropertiesUtil {
         }
         return value;
     }
+
+    //TODO 支持更多数据类型
 }

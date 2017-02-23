@@ -6,6 +6,8 @@ import redis.clients.jedis.JedisPool;
 /**
  * Created by huitailang on 17/2/22.
  * Redis操作工具类，支持读写分离
+ * 部署一主多从
+ * TODO 支持多个从节点读
  */
 public class RedisUtil {
     private static RedisConnectionHolder connectionHolder = new RedisConnectionHolder();
@@ -26,4 +28,6 @@ public class RedisUtil {
         Jedis jedis = readJedisPool.getResource();
         return jedis.get(key);
     }
+
+    //TODO redis其它命令
 }
