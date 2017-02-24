@@ -1,5 +1,7 @@
 package com.etime.arch.redis.rw;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
@@ -10,6 +12,7 @@ import redis.clients.jedis.JedisPool;
  * TODO 支持多个从节点读
  */
 public class RedisUtil {
+    public static final Logger LOGGER = LoggerFactory.getLogger(RedisUtil.class);
     private static RedisConnectionHolder connectionHolder = new RedisConnectionHolder();
     private static JedisPool readJedisPool;
     private static JedisPool writeJedisPool;
@@ -20,13 +23,39 @@ public class RedisUtil {
     }
 
     public static String set(final String key, String value) {
-        Jedis jedis = writeJedisPool.getResource();
-        return jedis.set(key, value);
+        Jedis jedis = null;
+        String response = null;
+
+        try{
+            jedis = writeJedisPool.getResource();
+            response = jedis.set(key, value);
+        }catch (Exception e){
+            LOGGER.error(e.getMessage(), e);
+        }finally {
+            if(jedis != null){
+                jedis.close();
+            }
+        }
+
+        return response;
     }
 
     public static String get(final String key) {
-        Jedis jedis = readJedisPool.getResource();
-        return jedis.get(key);
+        Jedis jedis = null;
+        String response = null;
+
+        try{
+            jedis = readJedisPool.getResource();
+            response = jedis.get(key);
+        }catch (Exception e){
+            LOGGER.error(e.getMessage(), e);
+        }finally {
+            if(jedis != null){
+                jedis.close();
+            }
+        }
+
+        return response;
     }
 
     //TODO redis其它命令
