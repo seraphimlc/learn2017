@@ -10,6 +10,17 @@ import java.util.UUID;
  * Created by huitailang on 17/2/21.
  * 基于Redis实现的分布式锁
  */
+
+/**
+ * add by lc
+ *
+ * 锁必须要实现Lock接口,基于这个做一下
+ * 要考虑如何做重入和读写锁
+ * 另外,了解一下AbstractQueuedSynchronizer,然后我们讨论一下对这个类的了解
+ *
+ *
+ */
+
 public class DistributedLock {
     private JedisPool jedisPool;
 
